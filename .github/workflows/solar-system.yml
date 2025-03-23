@@ -85,3 +85,20 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
+        - name: Docker Build and push
+          uses: docker/build-push-action@v6
+          with:
+            push: false
+            tags: ${{ github.actor }}/solar-system:${{ github.sha }}
+        - name: Docker Image Testing
+          run: |
+            docker images
+            docker run --name solar-syste-app -d \
+              -p 3000:3000 \
+              -e MONGO_URI=$MONGO_URI \
+              -e MONGO_USERNAME=$MONGO_USERNAME \
+              -e MONGO_PASSWORD=$MONGO_PASSWORD \
+              ${{ github.actor }}/solar-system:${{ github.sha }}
+          
+            echo Testing Image URL using wget
+            wget =q -O - 127.0.0.1:3000/live | grep live
