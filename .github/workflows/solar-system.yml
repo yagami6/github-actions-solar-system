@@ -160,11 +160,11 @@ jobs:
       - name: Install Kubectl
         uses: azure/setup-kubectl@v4
         with:
-          version: 'v1.28.1'
+          version: v1.28.1
       - name: Set kube context
         uses: azure/k8s-set-context@v4
         with:
            method: kubeconfig
-           kubeconfig: ${{ secrets.KUBECONFIG }}
+           kubeconfig: '${{ secrets.KUBECONFIG }}'
       - name: Verify kubectl is set
         run: kubectl version -o yaml
