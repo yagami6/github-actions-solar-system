@@ -73,10 +73,10 @@ jobs:
               path: coverage
               retention-days: 5       
     docker:
-      permissions: 
-        packages: write
       name: Containerization
       needs: [unit-testing,code-coverage]
+      permissions: 
+        packages: write
       runs-on: ubuntu-latest
       steps:
         - name: Checkout Repo
